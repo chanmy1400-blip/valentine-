@@ -1,62 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="my">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Will You Be My Valentine?</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
             background-color: #ffe6e6;
             font-family: 'Arial', sans-serif;
             text-align: center;
-            overflow: hidden; /* ခလုတ်ပြေးတဲ့အခါ scroll bar မပေါ်အောင် */
+            overflow: hidden; /* Screen မရွေ့အောင် */
+            position: relative;
         }
-        h1 { color: #ff4d4d; }
-        
+
+        h1 { color: #ff4d4d; margin-bottom: 30px; padding: 0 20px; }
+
+        .container {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
         .buttons {
             display: flex;
             gap: 20px;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 50px;
-            position: relative;
+            z-index: 10;
         }
-        
+
         button {
             padding: 15px 30px;
             font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            border-radius: 15px;
+            border-radius: 50px;
             border: none;
-            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.1s ease;
         }
-        
+
         #yesBtn { background-color: #ff4d4d; color: white; }
-        
+
         #noBtn { 
             background-color: #999; 
-            color: white;
-            position: relative; /* အစမှာ အလယ်မှာ ရှိနေအောင် */
-            z-index: 10;
+            color: white; 
+            position: relative; 
+            touch-action: none; /* ဖုန်းမှာ touch လုပ်ရင် page မရွေ့အောင် */
         }
-        
-        #yesScreen { display: none; flex-direction: column; align-items: center; }
-        img { width: 200px; border-radius: 20px; margin-bottom: 20px; }
+
+        #yesScreen { 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px;
+        }
+
+        img { width: 80%; max-width: 250px; border-radius: 20px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div id="mainScreen">
         <h1>Will You Be My Valentine? ❤️</h1>
-        <div class="buttons">
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
+        <div class="container">
+            <div class="buttons">
+                <button id="yesBtn">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
         </div>
     </div>
 
@@ -77,20 +96,26 @@
             yesScreen.style.display = "flex";
         });
 
-        function moveButton() {
-            // Mouse ထိလိုက်တာနဲ့ position ကို absolute ပြောင်းပြီး ပြေးခိုင်းမယ်
-            noBtn.style.position = "absolute";
+        function moveButton(e) {
+            // Screen ရဲ့ အကျယ်နဲ့ အမြင့်ကို တိုင်းတာမယ်
+            const padding = 50;
+            const maxWidth = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxHeight = window.innerHeight - noBtn.offsetHeight - padding;
+
+            // ခလုတ်ကို နေရာသစ်ဆီ ရွှေ့မယ်
+            noBtn.style.position = "fixed"; 
             
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            
-            noBtn.style.left = x + "px";
-            noBtn.style.top = y + "px";
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
+
+            noBtn.style.left = randomX + "px";
+            noBtn.style.top = randomY + "px";
         }
 
+        // Mouse နဲ့ထိရင်ရော၊ လက်နဲ့ထိရင်ရော ပြေးအောင်လုပ်မယ်
         noBtn.addEventListener("mouseover", moveButton);
         noBtn.addEventListener("touchstart", (e) => {
-            e.preventDefault(); // ဖုန်းမှာ click နှိပ်မိတာမျိုး မဖြစ်အောင်
+            e.preventDefault(); // ဖုန်းမှာ မတော်တဆ နှိပ်မိခြင်းကို ကာကွယ်မယ်
             moveButton();
         });
     </script>
