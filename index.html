@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffe6eb;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #d6336c;
+}
+
+button {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#yesBtn {
+    background: #28a745;
+    color: white;
+}
+
+#noBtn {
+    background: #dc3545;
+    color: white;
+}
+
+/* YES SCREEN */
+#yesScreen {
+    position: fixed;
+    inset: 0;
+    background: #3cb043;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#yesScreen h2 {
+    font-size: 10rem;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Will You Be My Valentine? ❤️</h1>
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+</div>
+
+<div id="yesScreen">
+    <h2>YES</h2>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const yesScreen = document.getElementById("yesScreen");
+
+yesBtn.addEventListener("click", () => {
+    yesScreen.style.display = "flex";
+});
+
+// Make "No" button run away
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+</script>
+
+</body>
+</html>
